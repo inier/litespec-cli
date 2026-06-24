@@ -1,0 +1,14 @@
+{
+  "name": "litespec-cli",
+  "version": "2.0.0",
+  "type": "module",
+  "scripts": {
+    "litespec": "bun run src/cli.ts",
+    "test": "bun test",
+    "build": "bun build src/cli.ts --compile --outfile dist/litespec"
+  },
+  "devDependencies": {
+    "@types/node": "^26.0.0",
+    "bun-types": "latest"
+  }
+}
