@@ -1,5 +1,5 @@
 import { join } from "path";
-import { mkdir, exists, writeFile } from "node:fs/promises";
+import { mkdir, writeFile, stat } from "node:fs/promises";
 import { log, colors } from "../utils";
 import { i18n } from "../i18n";
 import { link } from "./link";
@@ -13,7 +13,9 @@ export async function init(args: string[]) {
   if (isLegacy) log(colors.yellow, t.init.legacyMode);
 
   const agentsMd = join(root, "AGENTS.md");
-  if (!(await exists(agentsMd))) {
+  let agentsExists = false;
+  try { await stat(agentsMd); agentsExists = true; } catch {}
+  if (!agentsExists) {
     const content = isLegacy ? t.init.agentsLegacyContent : t.init.agentsContent;
     await writeFile(agentsMd, content);
     log(colors.green, t.init.createdAgents);

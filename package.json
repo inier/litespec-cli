@@ -2,6 +2,15 @@
   "name": "litespec-cli",
   "version": "2.0.0",
   "type": "module",
+  "description": "轻量级规范驱动开发 (SDD) CLI 工具，支持多 AI IDE 集成",
+  "license": "MIT",
+  "bin": {
+    "litespec": "./src/cli.ts"
+  },
+  "files": [
+    "src",
+    "README.md"
+  ],
   "scripts": {
     "litespec": "bun run src/cli.ts",
     "test": "bun test",

@@ -1,5 +1,5 @@
 import { join } from "path";
-import { exists, mkdir, writeFile } from "node:fs/promises";
+import { mkdir, writeFile, stat } from "node:fs/promises";
 import { log, colors } from "../utils";
 import { i18n } from "../i18n";
 import { getAdapters } from "../adapters/registry";
@@ -19,7 +19,9 @@ export async function link() {
     const configPath = join(root, adapter.configPath);
     const configDir = join(configPath, "..");
 
-    if (await exists(configPath)) {
+    let configExists = false;
+    try { await stat(configPath); configExists = true; } catch {}
+    if (configExists) {
       continue;
     }
 

@@ -1,0 +1,6 @@
+__tests__
+.github
+dist
+.gitignore
+bun.lock
+bunfig.toml
