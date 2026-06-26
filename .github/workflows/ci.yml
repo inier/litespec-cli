@@ -18,42 +18,8 @@ jobs:
       - run: bun install
       - run: bun test
 
-  build:
-    name: Build (${{ matrix.os }})
+  build-and-publish:
     needs: test
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
-    steps:
-      - uses: actions/checkout@v5
-      - uses: oven-sh/setup-bun@v2
-        with:
-          bun-version: latest
-      - run: bun install
-      - name: Build binary (Linux)
-        if: runner.os == 'Linux'
-        run: bun build src/cli.ts --compile --outfile dist/litespec-linux-x64
-      - name: Build binary (macOS)
-        if: runner.os == 'macOS'
-        run: |
-          bun build src/cli.ts --compile --outfile dist/litespec-macos-x64
-          # Apple Silicon 构建（macos-latest 可能是 arm64）
-          if [ "$(uname -m)" == "arm64" ]; then
-            bun build src/cli.ts --compile --outfile dist/litespec-macos-arm64
-          fi
-      - name: Build binary (Windows)
-        if: runner.os == 'Windows'
-        run: bun build src/cli.ts --compile --outfile dist/litespec-win-x64.exe
-      - name: Upload binary artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: litespec-binaries-${{ matrix.os }}
-          path: dist/litespec-*
-          if-no-files-found: error
-
-  publish:
-    needs: [test, build]
     if: startsWith(github.ref, 'refs/tags/v') || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     permissions:
@@ -61,21 +27,14 @@ jobs:
       id-token: write
     steps:
       - uses: actions/checkout@v5
-      - name: Download all binary artifacts
-        uses: actions/download-artifact@v4
-        with:
-          path: artifacts
-          pattern: litespec-binaries-*
-          merge-multiple: true
-      - name: Flatten artifacts to dist
-        run: |
-          mkdir -p dist
-          find artifacts -type f -name 'litespec-*' -exec cp {} dist/ \;
-          ls -la dist/
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version: latest
       - run: bun install
+      - name: Build all platforms
+        run: bun run build:all
+      - name: List binaries
+        run: ls -la dist/
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
