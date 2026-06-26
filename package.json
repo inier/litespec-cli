@@ -4,6 +4,10 @@
   "type": "module",
   "description": "轻量级规范驱动开发 (SDD) CLI 工具，支持多 AI IDE 集成",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/inier/litespec-cli"
+  },
   "bin": {
     "litespec": "./src/cli.ts"
   },
