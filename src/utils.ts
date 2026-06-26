@@ -8,7 +8,11 @@ export const colors = {
   gray: "\x1b[90m",
 };
 
-export function log(color: string, message: string) {
+export function log(color: string | undefined, message?: string) {
+  if (message === undefined) {
+    console.log("");
+    return;
+  }
   console.log(`${color}${message}${colors.reset}`);
 }
 

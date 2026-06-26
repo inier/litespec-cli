@@ -1,7 +1,8 @@
 export default {
   cli: {
-    unknownCommand: "\n❌ Unknown command: ",
-    usage: "\nUsage: bun run litespec <command>",
+    unknownCommand: "\n Unknown command: ",
+    usage: "\nUsage: litespec <command>",
+    helpTitle: "\n LiteSpec CLI - Spec-Driven Development Tool",
     initDesc: "  init [--legacy] [--lang zh]  Initialize project and sync IDEs",
     linkDesc: "  link                     Sync context to all supported AI tools",
     specifyDesc: "  specify [name]           Generate requirement spec template",

@@ -1,7 +1,8 @@
 export default {
   cli: {
-    unknownCommand: "\n❌ 未知命令: ",
-    usage: "\n用法: bun run litespec <command>",
+    unknownCommand: "\n 未知命令: ",
+    usage: "\n用法: litespec <command>",
+    helpTitle: "\n📖 LiteSpec CLI - 规范驱动开发工具",
     initDesc: "  init [--legacy] [--lang zh]  初始化项目并同步 IDE",
     linkDesc: "  link                     同步上下文到所有支持的 AI 工具",
     specifyDesc: "  specify [name]           生成需求规范模板",

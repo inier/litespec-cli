@@ -12,6 +12,22 @@ async function main() {
   await i18n.setLocale(lang);
   const t = i18n.t;
 
+  // 无参数时显示帮助
+  if (!command) {
+    log(colors.blue, t.cli.helpTitle);
+    log(colors.gray, t.cli.usage);
+    log(undefined);
+    log(colors.gray, t.cli.initDesc);
+    log(colors.gray, t.cli.linkDesc);
+    log(colors.gray, t.cli.specifyDesc);
+    log(colors.gray, t.cli.planDesc);
+    log(colors.gray, t.cli.validateDesc);
+    log(colors.gray, t.cli.reverseDesc);
+    log(undefined);
+    log(colors.gray, "💡 提示: 使用 --lang=zh 切换中文界面");
+    return;
+  }
+
   switch (command) {
     case "init":
       await init(args);
@@ -28,7 +44,8 @@ async function main() {
       break;
     default:
       log(colors.red, t.cli.unknownCommand + command);
-      log(colors.blue, t.cli.usage);
+      log(colors.gray, t.cli.usage);
+      log(undefined);
       log(colors.gray, t.cli.initDesc);
       log(colors.gray, t.cli.linkDesc);
       log(colors.gray, t.cli.specifyDesc);
