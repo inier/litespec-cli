@@ -39,8 +39,7 @@
     "build:macos-x64": "bun build src/cli.ts --compile --target=bun-darwin-x64 --outfile dist/litespec-macos-x64",
     "build:macos-arm64": "bun build src/cli.ts --compile --target=bun-darwin-arm64 --outfile dist/litespec-macos-arm64",
     "build:win-x64": "bun build src/cli.ts --compile --target=bun-windows-x64 --outfile dist/litespec-win-x64.exe",
-    "build:all": "bun build src/cli.ts --compile --target=bun-linux-x64 --outfile dist/litespec-linux-x64 && bun build src/cli.ts --compile --target=bun-linux-arm64 --outfile dist/litespec-linux-arm64 && bun build src/cli.ts --compile --target=bun-darwin-x64 --outfile dist/litespec-macos-x64 && bun build src/cli.ts --compile --target=bun-darwin-arm64 --outfile dist/litespec-macos-arm64 && bun build src/cli.ts --compile --target=bun-windows-x64 --outfile dist/litespec-win-x64.exe",
-    "prepublishOnly": "bun run build:all"
+    "build:all": "bun build src/cli.ts --compile --target=bun-linux-x64 --outfile dist/litespec-linux-x64 && bun build src/cli.ts --compile --target=bun-linux-arm64 --outfile dist/litespec-linux-arm64 && bun build src/cli.ts --compile --target=bun-darwin-x64 --outfile dist/litespec-macos-x64 && bun build src/cli.ts --compile --target=bun-darwin-arm64 --outfile dist/litespec-macos-arm64 && bun build src/cli.ts --compile --target=bun-windows-x64 --outfile dist/litespec-win-x64.exe"
   },
   "devDependencies": {
     "@types/node": "^26.0.0",
