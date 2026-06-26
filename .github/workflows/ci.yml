@@ -64,11 +64,14 @@ jobs:
       - name: Download all binary artifacts
         uses: actions/download-artifact@v4
         with:
-          path: dist
+          path: artifacts
           pattern: litespec-binaries-*
           merge-multiple: true
-      - name: List downloaded binaries
-        run: ls -la dist/
+      - name: Flatten artifacts to dist
+        run: |
+          mkdir -p dist
+          find artifacts -type f -name 'litespec-*' -exec cp {} dist/ \;
+          ls -la dist/
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version: latest

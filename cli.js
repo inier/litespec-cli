@@ -38,9 +38,23 @@ function tryRunSource(cmd, args) {
 const binaryName = getBinaryName();
 const binaryPath = join(__dirname, 'dist', binaryName);
 
-// 1. 尝试运行编译后的二进制文件
+// 1. 尝试运行编译后的二进制文件（带平台后缀）
 if (existsSync(binaryPath)) {
   const result = spawnSync(binaryPath, process.argv.slice(2), {
+    stdio: 'inherit',
+    cwd: process.cwd()
+  });
+
+  if (!result.error && result.status !== 127) {
+    process.exit(result.status || 0);
+  }
+}
+
+// 1.5 回退到本地开发的通用文件名（不带平台后缀）
+const genericBinaryName = process.platform === 'win32' ? 'litespec.exe' : 'litespec';
+const genericBinaryPath = join(__dirname, 'dist', genericBinaryName);
+if (existsSync(genericBinaryPath)) {
+  const result = spawnSync(genericBinaryPath, process.argv.slice(2), {
     stdio: 'inherit',
     cwd: process.cwd()
   });
