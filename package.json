@@ -22,11 +22,12 @@
     "bun"
   ],
   "bin": {
-    "litespec": "./dist/litespec"
+    "litespec": "./cli.js"
   },
   "files": [
     "src",
     "dist",
+    "cli.js",
     "README.md"
   ],
   "scripts": {
