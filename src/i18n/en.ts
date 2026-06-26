@@ -17,7 +17,6 @@ export default {
     legacyMode: "⚠️  Legacy Mode Enabled: Enforcing Delta Specs & Reverse Engineering.",
     createdAgents: "✅ Created AGENTS.md",
     createdDocs: "✅ Created docs/ directory",
-    createdTemplates: (count: number) => `✅ Created ${count} initial templates`,
     agentsContent: `# Project Constitution (Single Source of Truth)
 
 ## Core Philosophy
@@ -41,98 +40,6 @@ export default {
 1. Run \`/litespec-specify\` to define requirements.
 2. Run \`/litespec-plan\` to architect the solution.
 3. Handoff to Superpowers for TDD execution.
-`,
-    specifyTemplate: `# Feature Specification
-
-## User Story
-<!-- As a [user], I want to [action] so that [benefit] -->
-
-## Acceptance Criteria (DoD)
-- [ ] Criterion 1
-- [ ] Criterion 2
-
-## Technical Constraints
-- 
-`,
-    specifyLegacyTemplate: `# Feature Specification (Legacy)
-
-## User Story
-<!-- As a [user], I want to [action] so that [benefit] -->
-
-## Impact Analysis
-- **ADDED**: 
-- **MODIFIED**: 
-- **REMOVED**: 
-
-## Acceptance Criteria (DoD)
-- [ ] Criterion 1
-- [ ] Criterion 2
-
-## Technical Constraints
-- 
-`,
-    planTemplate: `# Architecture Plan
-
-## Related Spec
-<!-- Link to the specification document -->
-
-## Technical Approach
-- 
-
-## Break Mechanism (Legacy Only)
-<!-- How to safely deprecate or isolate old code -->
-- 
-`,
-    planLegacyTemplate: `# Architecture Plan (Legacy)
-
-## Related Spec
-<!-- Link to the specification document -->
-
-## Technical Approach
-- 
-
-## Break Mechanism
-<!-- MUST define how to safely deprecate or isolate old code -->
-- **Phase 1 (Compat)**: 
-- **Phase 2 (Deprecate)**: 
-- **Phase 3 (Remove)**: 
-`,
-    validateTemplate: `# Validation Checklist
-
-## Spec Validation
-- [ ] DoD keywords are present
-- [ ] Format is correct
-
-## Plan Validation
-- [ ] Break mechanism is defined (if legacy)
-- [ ] Architecture aligns with constitution
-`,
-    reverseTemplate: `# Reverse Engineering (Current State)
-
-## Module Overview
-- 
-
-## Hidden Rules & Implicit Constraints
-- 
-
-## Refactor Risks
-- 
-`,
-    reverseLegacyTemplate: `# Reverse Engineering (Current State - Legacy)
-
-## Module Overview
-- 
-
-## Hidden Rules & Implicit Constraints
-- 
-
-## Refactor Risks
-- 
-
-## Impact Assessment
-- **ADDED**: 
-- **MODIFIED**: 
-- **REMOVED**: 
 `,
   },
   link: {
