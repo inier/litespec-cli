@@ -34,6 +34,8 @@
     "litespec": "bun run src/cli.ts",
     "test": "bun test",
     "build": "bun build src/cli.ts --compile --outfile dist/litespec",
+    "build:remote": "bun run scripts/build-remote.js",
+    "download:artifacts": "bash scripts/download-artifacts.sh",
     "prepublishOnly": "bun run build"
   },
   "devDependencies": {
