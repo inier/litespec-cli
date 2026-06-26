@@ -8,6 +8,19 @@
     "type": "git",
     "url": "https://github.com/inier/litespec-cli"
   },
+  "homepage": "https://github.com/inier/litespec-cli#readme",
+  "keywords": [
+    "sdd",
+    "spec-driven-development",
+    "ai-coding",
+    "cursor",
+    "trae",
+    "qoder",
+    "claude-code",
+    "cli",
+    "workflow",
+    "bun"
+  ],
   "bin": {
     "litespec": "./src/cli.ts"
   },
