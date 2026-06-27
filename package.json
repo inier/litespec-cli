@@ -1,6 +1,6 @@
 {
   "name": "@ozo/litespec-cli",
-  "version": "2.1.0",
+  "version": "2.2.2",
   "type": "module",
   "description": "轻量级规范驱动开发 (SDD) CLI 工具，支持多 AI IDE 集成",
   "license": "MIT",
