@@ -1,0 +1,14 @@
+{
+  "version": "1.0.0",
+  "locale": "zh",
+  "legacyMode": false,
+  "adapters": [
+    "cursor",
+    "trae",
+    "qoder",
+    "qodercn",
+    "claude",
+    "codebuddy",
+    "workbuddy"
+  ]
+}
