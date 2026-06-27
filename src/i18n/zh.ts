@@ -11,36 +11,15 @@ export default {
     reverseDesc: "  reverse [name]           生成逆向工程模板",
     aiWorkflow: (cmd: string) => `\n⚠️  '${cmd}' 是 AI 驱动的工作流。`,
     aiWorkflowHint: "   请打开你的 AI IDE 并使用 /litespec- 命令。",
+    langHint: "💡 提示: 使用 --lang=zh 切换中文界面",
   },
   init: {
-    start: "\n🚀 正在初始化 LiteSpec v2.0...",
+    start: "\n 正在初始化 LiteSpec v2.0...",
     legacyMode: "⚠️  遗留模式已开启: 强制使用增量规范与逆向工程。",
     createdAgents: "✅ 已创建 AGENTS.md",
-    createdDocs: "✅ 已创建 docs/ 目录",
-    agentsContent: `# 项目宪法 (单一事实来源)
-
-## 核心理念
-- **规范驱动 (SDD First)**: 所有代码必须由规范驱动。
-- **拒绝隐式规则**: 一切必须被文档化。
-
-## 工作流
-1. 运行 \`/litespec-specify\` 定义需求。
-2. 运行 \`/litespec-plan\` 设计架构。
-3. 交接给 Superpowers 执行 TDD。
-`,
-    agentsLegacyContent: `# 项目宪法 (单一事实来源)
-
-## 核心理念
-- **规范驱动 (SDD First)**: 所有代码必须由规范驱动。
-- **拒绝隐式规则**: 一切必须被文档化。
-- **遗留安全**: 始终使用 ADDED/MODIFIED/REMOVED 标签进行影响面分析。
-- **废弃机制**: 每个重构计划必须包含废弃策略。
-
-## 工作流
-1. 运行 \`/litespec-specify\` 定义需求。
-2. 运行 \`/litespec-plan\` 设计架构。
-3. 交接给 Superpowers 执行 TDD。
-`,
+    createdDocs: "✅ 已创建 docs/litespec/ 目录",
+    createdLitespecDir: "✅ 已创建 .litespec/ 目录",
+    copiedTemplates: (count: number) => `✅ 已复制 ${count} 个模板文件`,
   },
   link: {
     start: "\n🔗 正在同步 LiteSpec 上下文到 AI IDE 与 Agent...",
@@ -53,50 +32,5 @@ export default {
     fileExists: "文件已存在，跳过以防止覆盖:",
     created: "已创建工作流模板:",
     nextStep: "下一步: 打开你的 AI IDE 并运行对应的 /litespec-* 命令。",
-    specifyTemplate: `# 功能需求规范
-
-## 用户故事
-<!-- 作为 [角色]，我想要 [操作]，以便于 [价值] -->
-
-## 验收标准 (DoD)
-- [ ] 标准 1
-- [ ] 标准 2
-
-## 技术约束
-- 
-`,
-    planTemplate: `# 架构计划
-
-## 关联规范
-<!-- 链接到需求规范文档 -->
-
-## 技术方案
-- 
-
-## 废弃机制 (仅限遗留项目)
-<!-- 如何安全地废弃或隔离旧代码 -->
-- 
-`,
-    validateTemplate: `# 校验清单
-
-## 规范校验
-- [ ] DoD 关键字存在
-- [ ] 格式正确
-
-## 计划校验
-- [ ] 废弃机制已定义 (如果是遗留项目)
-- [ ] 架构符合项目宪法
-`,
-    reverseTemplate: `# 逆向工程 (现状分析)
-
-## 模块概述
-- 
-
-## 隐藏规则与隐式约束
-- 
-
-## 重构风险
-- 
-`,
-  }
+  },
 };

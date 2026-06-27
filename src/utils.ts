@@ -15,9 +15,3 @@ export function log(color: string | undefined, message?: string) {
   }
   console.log(`${color}${message}${colors.reset}`);
 }
-
-export let currentLang: "en" | "zh" = "en";
-
-export function setLang(lang: string) {
-  currentLang = lang === "zh" ? "zh" : "en";
-}

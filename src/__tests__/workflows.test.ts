@@ -22,7 +22,7 @@ describe("Workflows Module", () => {
   test("should generate a specify template with custom name", async () => {
     await runWorkflow("specify", ["user-auth"]);
     
-    const filePath = join(TEST_DIR, "docs", "user-auth.md");
+    const filePath = join(TEST_DIR, "docs", "litespec", "user-auth.md");
     expect(await stat(filePath).then(() => true).catch(() => false)).toBe(true);
     
     const content = await Bun.file(filePath).text();
@@ -32,13 +32,13 @@ describe("Workflows Module", () => {
   test("should auto-generate filename if not provided", async () => {
     await runWorkflow("plan", []);
     
-    const files = await Array.fromAsync(new Bun.Glob("*-plan.md").scan(join(TEST_DIR, "docs")));
+    const files = await Array.fromAsync(new Bun.Glob("*-plan.md").scan(join(TEST_DIR, "docs", "litespec")));
     expect(files.length).toBe(1);
   });
 
   test("should prevent overwriting existing files", async () => {
     await runWorkflow("validate", ["checklist"]);
-    const filePath = join(TEST_DIR, "docs", "checklist.md");
+    const filePath = join(TEST_DIR, "docs", "litespec", "checklist.md");
     const stat1 = await Bun.file(filePath).stat();
 
     await new Promise((r) => setTimeout(r, 10));

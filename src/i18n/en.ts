@@ -11,36 +11,15 @@ export default {
     reverseDesc: "  reverse [name]           Generate reverse-engineering template",
     aiWorkflow: (cmd: string) => `\n⚠️  '${cmd}' is an AI-driven workflow.`,
     aiWorkflowHint: "   Please open your AI IDE and use the /litespec- command.",
+    langHint: "💡 Tip: Use --lang=zh to switch to Chinese",
   },
   init: {
-    start: "\n🚀 Initializing LiteSpec v2.0...",
+    start: "\n Initializing LiteSpec v2.0...",
     legacyMode: "⚠️  Legacy Mode Enabled: Enforcing Delta Specs & Reverse Engineering.",
     createdAgents: "✅ Created AGENTS.md",
-    createdDocs: "✅ Created docs/ directory",
-    agentsContent: `# Project Constitution (Single Source of Truth)
-
-## Core Philosophy
-- **SDD First**: All code must be driven by a specification.
-- **No Implicit Rules**: Everything must be documented.
-
-## Workflow
-1. Run \`/litespec-specify\` to define requirements.
-2. Run \`/litespec-plan\` to architect the solution.
-3. Handoff to Superpowers for TDD execution.
-`,
-    agentsLegacyContent: `# Project Constitution (Single Source of Truth)
-
-## Core Philosophy
-- **SDD First**: All code must be driven by a specification.
-- **No Implicit Rules**: Everything must be documented.
-- **Legacy Safe**: Always use ADDED/MODIFIED/REMOVED tags for impact analysis.
-- **Break Mechanism**: Every refactor plan MUST include a deprecation strategy.
-
-## Workflow
-1. Run \`/litespec-specify\` to define requirements.
-2. Run \`/litespec-plan\` to architect the solution.
-3. Handoff to Superpowers for TDD execution.
-`,
+    createdDocs: "✅ Created docs/litespec/ directory",
+    createdLitespecDir: "✅ Created .litespec/ directory",
+    copiedTemplates: (count: number) => `✅ Copied ${count} template files`,
   },
   link: {
     start: "\n🔗 Syncing LiteSpec Context to AI IDEs & Agents...",
@@ -53,50 +32,5 @@ export default {
     fileExists: "File already exists, skipping to prevent overwrites:",
     created: "Created workflow template:",
     nextStep: "Next step: Open your AI IDE and run the corresponding /litespec-* command.",
-    specifyTemplate: `# Feature Specification
-
-## User Story
-<!-- As a [user], I want to [action] so that [benefit] -->
-
-## Acceptance Criteria (DoD)
-- [ ] Criterion 1
-- [ ] Criterion 2
-
-## Technical Constraints
-- 
-`,
-    planTemplate: `# Architecture Plan
-
-## Related Spec
-<!-- Link to the specification document -->
-
-## Technical Approach
-- 
-
-## Break Mechanism (Legacy Only)
-<!-- How to safely deprecate or isolate old code -->
-- 
-`,
-    validateTemplate: `# Validation Checklist
-
-## Spec Validation
-- [ ] DoD keywords are present
-- [ ] Format is correct
-
-## Plan Validation
-- [ ] Break mechanism is defined (if legacy)
-- [ ] Architecture aligns with constitution
-`,
-    reverseTemplate: `# Reverse Engineering (Current State)
-
-## Module Overview
-- 
-
-## Hidden Rules & Implicit Constraints
-- 
-
-## Refactor Risks
-- 
-`,
-  }
+  },
 };

@@ -12,7 +12,7 @@ export async function link() {
   log(colors.blue, t.link.start);
 
   const adapters = getAdapters();
-  const slashCommands = getSlashCommands();
+  const slashCommands = await getSlashCommands();
   let syncedCount = 0;
 
   for (const adapter of adapters) {

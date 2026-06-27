@@ -1,6 +1,6 @@
 import { describe, test, expect, beforeEach, afterEach } from "bun:test";
 import { join } from "path";
-import { mkdir, rm, stat, readdir } from "node:fs/promises";
+import { mkdir, rm, stat, readdir, readFile } from "node:fs/promises";
 import { init } from "../commands/init";
 import { i18n } from "../i18n";
 
@@ -31,60 +31,100 @@ describe("Init Command", () => {
     expect(await stat(docsDir).then(s => s.isDirectory()).catch(() => false)).toBe(true);
   });
 
-  test("should not create template files in docs/", async () => {
-    await init([]);
+  test("should create .litespec/ directory structure", async () => {
+    await init(["--lang=zh"]);
 
-    // docs/ should be empty (no template files)
-    const docsDir = join(TEST_DIR, "docs");
-    const files = await readdir(docsDir);
-    expect(files.length).toBe(0);
+    // Check .litespec/ directory exists
+    const litespecDir = join(TEST_DIR, ".litespec");
+    expect(await stat(litespecDir).then(s => s.isDirectory()).catch(() => false)).toBe(true);
+
+    // Check .litespec/templates/ exists (flat structure, no language subdir)
+    const templatesDir = join(litespecDir, "templates");
+    expect(await stat(templatesDir).then(s => s.isDirectory()).catch(() => false)).toBe(true);
+
+    // Check .litespec/memory/ exists
+    const memoryDir = join(litespecDir, "memory");
+    expect(await stat(memoryDir).then(s => s.isDirectory()).catch(() => false)).toBe(true);
   });
 
-  test("should create AGENTS.md with correct content", async () => {
-    await init([]);
+  test("should copy template files to .litespec/templates/", async () => {
+    await init(["--lang=zh"]);
 
-    const agentsPath = join(TEST_DIR, "AGENTS.md");
-    const content = await Bun.file(agentsPath).text();
+    const templatesDir = join(TEST_DIR, ".litespec", "templates");
+    const files = await readdir(templatesDir);
 
-    expect(content).toContain("项目宪法");
-    expect(content).toContain("SDD First");
-    expect(content).toContain("litespec-specify");
-    expect(content).toContain("litespec-plan");
+    expect(files).toContain("init.md");
+    expect(files).toContain("specify.md");
+    expect(files).toContain("plan.md");
+    expect(files).toContain("validate.md");
+    expect(files).toContain("reverse.md");
   });
 
-  test("should create legacy AGENTS.md when --legacy flag is used", async () => {
+  test("should create config.json with correct structure", async () => {
+    await init([]);
+
+    const configPath = join(TEST_DIR, ".litespec", "config.json");
+    const content = await readFile(configPath, "utf-8");
+    const config = JSON.parse(content);
+
+    expect(config.version).toBe("1.0.0");
+    expect(config.locale).toBe("en");
+    expect(config.legacyMode).toBe(false);
+    expect(config.adapters).toBeDefined();
+    expect(Array.isArray(config.adapters)).toBe(true);
+  });
+
+  test("should create history.json with empty workflows array", async () => {
+    await init([]);
+
+    const historyPath = join(TEST_DIR, ".litespec", "memory", "history.json");
+    const content = await readFile(historyPath, "utf-8");
+    const history = JSON.parse(content);
+
+    expect(history.workflows).toEqual([]);
+  });
+
+  test("should create legacy config when --legacy flag is used", async () => {
     await init(["--legacy"]);
 
-    const agentsPath = join(TEST_DIR, "AGENTS.md");
-    const content = await Bun.file(agentsPath).text();
+    const configPath = join(TEST_DIR, ".litespec", "config.json");
+    const content = await readFile(configPath, "utf-8");
+    const config = JSON.parse(content);
 
-    expect(content).toContain("遗留安全");
-    expect(content).toContain("ADDED/MODIFIED/REMOVED");
-    expect(content).toContain("废弃机制");
+    expect(config.legacyMode).toBe(true);
+  });
+
+  test("should copy English templates when locale is en", async () => {
+    await i18n.setLocale("en");
+    await init(["--lang=en"]);
+
+    const templatesDir = join(TEST_DIR, ".litespec", "templates");
+    const files = await readdir(templatesDir);
+
+    expect(files).toContain("init.md");
+    expect(files).toContain("specify.md");
+    expect(files).toContain("plan.md");
+    expect(files).toContain("validate.md");
+    expect(files).toContain("reverse.md");
+
+    // Verify config has correct locale
+    const configPath = join(TEST_DIR, ".litespec", "config.json");
+    const configContent = await readFile(configPath, "utf-8");
+    const config = JSON.parse(configContent);
+    expect(config.locale).toBe("en");
   });
 
   test("should not overwrite existing AGENTS.md", async () => {
     await init([]);
 
     const agentsPath = join(TEST_DIR, "AGENTS.md");
-    const stat1 = await Bun.file(agentsPath).stat();
+    const stat1 = await stat(agentsPath);
 
     await new Promise((r) => setTimeout(r, 10));
 
     await init([]);
-    const stat2 = await Bun.file(agentsPath).stat();
+    const stat2 = await stat(agentsPath);
 
     expect(stat1.size).toBe(stat2.size);
-  });
-
-  test("should create English AGENTS.md when locale is en", async () => {
-    await i18n.setLocale("en");
-    await init([]);
-
-    const agentsPath = join(TEST_DIR, "AGENTS.md");
-    const content = await Bun.file(agentsPath).text();
-
-    expect(content).toContain("Project Constitution");
-    expect(content).toContain("SDD First");
   });
 });

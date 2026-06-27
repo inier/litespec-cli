@@ -20,6 +20,10 @@ export class I18n {
   get t(): TranslationDict {
     return this.dict;
   }
+
+  get currentLocale(): string {
+    return this.locale;
+  }
 }
 
 export const i18n = new I18n();

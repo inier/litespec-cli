@@ -5,8 +5,32 @@ import { log, colors } from "./utils";
 import { i18n } from "./i18n";
 
 const args = process.argv.slice(2);
-const command = args.find(a => !a.startsWith("--"));
-const lang = args.find(a => a.startsWith("--lang="))?.split("=")[1] || "en";
+
+// Parse --lang: support both `--lang=zh` and `--lang zh`
+function parseLang(): string {
+  const eqArg = args.find(a => a.startsWith("--lang="));
+  if (eqArg) return eqArg.split("=")[1];
+  const idx = args.indexOf("--lang");
+  if (idx !== -1 && args[idx + 1]) return args[idx + 1];
+  return "en";
+}
+
+const lang = parseLang();
+// Find command: skip --flag and the value after --lang
+function findCommand(): string | undefined {
+  for (let i = 0; i < args.length; i++) {
+    const arg = args[i];
+    if (arg.startsWith("--")) {
+      // Skip --lang's value if it's a separate arg
+      if (arg === "--lang") i++;
+      continue;
+    }
+    return arg;
+  }
+  return undefined;
+}
+
+const command = findCommand();
 
 async function main() {
   await i18n.setLocale(lang);
@@ -24,7 +48,7 @@ async function main() {
     log(colors.gray, t.cli.validateDesc);
     log(colors.gray, t.cli.reverseDesc);
     log(undefined);
-    log(colors.gray, "💡 提示: 使用 --lang=zh 切换中文界面");
+    log(colors.gray, t.cli.langHint);
     return;
   }
 
@@ -39,7 +63,7 @@ async function main() {
     case "plan":
     case "validate":
     case "reverse":
-      const workflowArgs = args.filter(a => a !== command && !a.startsWith("--lang="));
+      const workflowArgs = args.filter(a => a !== command && !a.startsWith("--lang") && a !== lang);
       await runWorkflow(command as WorkflowType, workflowArgs);
       break;
     default:
@@ -56,4 +80,7 @@ async function main() {
   }
 }
 
-main();
+main().catch((err) => {
+  log(colors.red, `Error: ${err instanceof Error ? err.message : String(err)}`);
+  process.exit(1);
+});
